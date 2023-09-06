@@ -13,12 +13,14 @@
     <script type="module" src="/src/entry.mjs"></script>
   </head>
   <body>
-    <div class="sample-box" style="width:400px; height:400px;">
+    <div class="sample-box" style="width:400px; height:250px;">
       <lm-editor value="Use value attribute" lang="html"></lm-editor>
     </div>
-    <div class="sample-box" style="width:auto; height:400px;">
+    <div class="sample-box" style="width:auto; height:250px;">
       <lm-editor lang="html" src="./test1.html"></lm-editor>
     </div>
-    <input onblur="console.log(this.value)" />
+    <div class="sample-box" style="width:auto; height:250px;">
+      <lm-editor lang="json" src="./data.json"></lm-editor>
+    </div>
   </body>
 </html>

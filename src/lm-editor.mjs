@@ -4,9 +4,9 @@ import { ref, createRef } from 'lit/directives/ref.js'
 import * as monaco from "monaco-editor";
 import styles from "monaco-editor/min/vs/editor/editor.main.css?inline";
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-// import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
-// import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
-// import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
+import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
+import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
+import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 // import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 
 import { emmetHTML } from 'emmet-monaco-es'
@@ -14,15 +14,15 @@ const dispose = emmetHTML(monaco, ['html', 'php', 'erb', 'vue'])
 
 window.MonacoEnvironment = {
   getWorker(_, label) {
-    // if (label === "json") {
-    //   return new jsonWorker();
-    // }
-    // if (label === "html" || label === "handlebars" || label === "razor") {
-    //   return new htmlWorker();
-    // }
-    // if (label === "css" || label === "scss" || label === "less") {
-    //   return new cssWorker();
-    // }
+    if (label === "json") {
+      return new jsonWorker();
+    }
+    if (label === "html" || label === "handlebars" || label === "razor") {
+      return new htmlWorker();
+    }
+    if (label === "css" || label === "scss" || label === "less") {
+      return new cssWorker();
+    }
     // if (label === "typescript" || label === "javascript") {
     //   return new tsWorker();
     // }
@@ -66,6 +66,24 @@ export class LitMonacoEditor extends LitElement {
         height: var(--lit-editor-footer-size);
       }
     `
+  }
+
+  connectedCallback() {
+    this.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        const saveEvent = new Event('save');
+        this.dispatchEvent(saveEvent);
+      }
+
+      if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+        e.preventDefault();
+        const saveEvent = new Event('explorer');
+        this.dispatchEvent(saveEvent);
+      }
+      
+    });
+    super.connectedCallback()
   }
 
   constructor() {
@@ -149,7 +167,7 @@ export class LitMonacoEditor extends LitElement {
       this.updateModelValue(inheritModelValue)
     }
     //
-    this.editor.onDidChangeModelContent(function (e) {
+    this.editor.onDidChangeModelContent(()=>{
       const updateEvent = new Event('update', { bubbles: true, composed: true });
       this.dispatchEvent(updateEvent);
       const changeEvent = new Event('change', { bubbles: true, composed: true });

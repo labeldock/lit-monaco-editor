@@ -16,7 +16,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             entryFileNames: 'index.js',
             format: 'esm',
             manualChunks(id) {
-              if (id.includes('node_modules')) {
+              if (id.includes('node_modules') && !id.includes('worker')) {
                 return 'vendor'
               }
             },
