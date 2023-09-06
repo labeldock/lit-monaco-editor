@@ -14,7 +14,11 @@
   </head>
   <body>
     <div class="sample-box" style="width:400px; height:400px;">
-      <lm-editor></lm-editor>
+      <lm-editor value="Use value attribute" lang="html"></lm-editor>
     </div>
+    <div class="sample-box" style="width:auto; height:400px;">
+      <lm-editor lang="html" src="./test1.html"></lm-editor>
+    </div>
+    <input onblur="console.log(this.value)" />
   </body>
 </html>
