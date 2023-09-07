@@ -1,24 +1,33 @@
-# lm-editor (lit-monaco-editor)
-Monaco Editor usable in plain HTML. It is currently in alpha version.
+# lm-editor: Lit-based Monaco Editor
 
-As a product, it is not enough. It might be helpful if you just reference it to produce a better monaco editor.
+The `lm-editor` package is an alpha-stage project that provides a Monaco Editor as a lit-based custom web element. While it is currently not feature-rich, it serves as a foundational block for more advanced Monaco Editor implementations.
 
-## Feature
-- Monaco 0.41.0
-- lit based custom element
-- Supports emmet. In case of html lang
-  
-## Build
+## Features
+
+- Built on Monaco 0.41.0
+- Utilizes lit for creating a custom element
+- Supports Emmet for HTML language
+
+## Build Instructions
+
+To build the project, run the following commands:
 
 ```bash
 npm install
 npm run build
 ```
-After running the command there are chunks in dist directory
 
-## Installation
+After successful execution, you will find the output files in the `dist` directory.
 
-## Start
+## Installation and Usage
+
+### Installation
+
+(TODO)
+
+### Basic Start
+
+Add the following HTML to include the `lm-editor` in your project:
 
 ```html
 <html>
@@ -28,14 +37,16 @@ After running the command there are chunks in dist directory
     </script>
 </head>
 <body>
-    <div style="">
+    <div>
       <lm-editor></lm-editor>
     </div>
 </body>
 </html>
 ```
 
-## Options
+### Options
+
+You can specify the source file and language using the `src` and `lang` attributes, respectively:
 
 ```html
 <lm-editor src="./template/index.html" lang="html"></lm-editor>
@@ -43,25 +54,35 @@ After running the command there are chunks in dist directory
 <lm-editor src="./template/index.css" lang="css"></lm-editor>
 <lm-editor src="./template/index.json" lang="json"></lm-editor>
 <lm-editor src="./template/index.yml" lang="yml"></lm-editor>
+```
+
+Or set an initial value and language directly:
+
+```html
 <lm-editor value="<div>Hello</div>" lang="html"></lm-editor>
 ```
+
+### Programmatic Access
+
+To interact with the editor programmatically, you can do the following:
 
 ```html
 <lm-editor id="editor" value="" lang="html"></lm-editor>
 <script>
-const editor = document.querySelector("editor")
+const editor = document.querySelector("#editor");
 
-// get value
-const editorContentValue = editor.getModelValue()
+// Get the current value of the editor
+const editorContentValue = editor.getModelValue();
 
-// set value
-editor.setModelValue("<div>Example</div>")
+// Set a new value to the editor
+editor.setModelValue("<div>Example</div>");
 
-// event
-editor.addEventListener("update", (event)=>{})
-editor.addEventListener("change", (event)=>{})
+// Listen to editor events
+editor.addEventListener("update", (event) => {});
+editor.addEventListener("change", (event) => {});
 </script>
 ```
 
-## next
+## Coming Soon
+
 - readOnly
