@@ -80,6 +80,8 @@ editor.setModelValue("<div>Example</div>");
 // Listen to editor events
 editor.addEventListener("update", (event) => {});
 editor.addEventListener("change", (event) => {});
+editor.addEventListener("save", (event) => {}); // ctrl + s || cmd + s
+editor.addEventListener("explorer", (event) => {}); // ctrl + p || cmd + p
 </script>
 ```
 
