@@ -8,6 +8,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   } else {
     // command === 'build'
     return {
+      base: '',
       publicDir: false,
       build: {
         rollupOptions: {
