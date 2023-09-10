@@ -16,11 +16,30 @@
     <div class="sample-box" style="width:400px; height:250px;">
       <lm-editor value="Use value attribute" lang="html"></lm-editor>
     </div>
+    <div>
+      <button onclick="toggleReadOnly(event)">Toggle readOnly</button>
+      <span>
+        ReadOnly : <samp id="read-only-status">?</samp>
+      </span>
+    </div>
     <div class="sample-box" style="width:auto; height:250px;">
-      <lm-editor lang="html" src="./test1.html"></lm-editor>
+      <lm-editor id="readonly-test-target" lang="html" src="./test1.html"></lm-editor>
     </div>
     <div class="sample-box" style="width:auto; height:250px;">
       <lm-editor lang="json" src="./data.json"></lm-editor>
     </div>
+    <script>
+      function toggleReadOnly (event){
+        const testTarget = document.getElementById("readonly-test-target")
+        const displayReadOnlyStatus = document.getElementById("read-only-status")
+        if(testTarget.matches("[readonly]")){
+          testTarget.removeAttribute("readOnly")
+          displayReadOnlyStatus.textContent = "false"
+        }else{
+          testTarget.setAttribute("readOnly", "")
+          displayReadOnlyStatus.textContent = "true"
+        }
+      }
+    </script>
   </body>
 </html>

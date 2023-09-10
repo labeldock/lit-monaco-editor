@@ -40,7 +40,17 @@ export class LitMonacoEditor extends LitElement {
       lang: { type: String },
       src: { type: String },
       value: { type: String },
+      readonly: { type: String },
     }
+  }
+
+  constructor() {
+    super()
+    this.theme = null
+    this.lang = null
+    this.src = null
+    this.value = null
+    this.readonly = null
   }
 
   static get styles() {
@@ -86,9 +96,6 @@ export class LitMonacoEditor extends LitElement {
     super.connectedCallback()
   }
 
-  constructor() {
-    super()
-  }
 
   getChildrenContents() {
     if (this.children.length > 0) return this.children[0];
@@ -173,6 +180,13 @@ export class LitMonacoEditor extends LitElement {
       const changeEvent = new Event('change', { bubbles: true, composed: true });
       this.dispatchEvent(changeEvent);
     });
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('readonly')) {
+      const readOnly = typeof this.readonly === "string" && this.readonly !== "false"
+      this.editor.updateOptions({ readOnly });
+    }
   }
   
   render() {

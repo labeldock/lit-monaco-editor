@@ -62,6 +62,12 @@ Or set an initial value and language directly:
 <lm-editor value="<div>Hello</div>" lang="html"></lm-editor>
 ```
 
+change readonly reactively:
+
+```html
+<lm-editor readOnly></lm-editor>
+```
+
 ### Programmatic Access
 
 To interact with the editor programmatically, you can do the following:
@@ -84,7 +90,3 @@ editor.addEventListener("save", (event) => {}); // ctrl + s || cmd + s
 editor.addEventListener("explorer", (event) => {}); // ctrl + p || cmd + p
 </script>
 ```
-
-## Coming Soon
-
-- readOnly
