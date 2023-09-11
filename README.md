@@ -65,7 +65,15 @@ Or set an initial value and language directly:
 change readonly reactively:
 
 ```html
+<!-- readonly -->
 <lm-editor readOnly></lm-editor>
+<lm-editor readonly></lm-editor>
+<lm-editor readonly=""></lm-editor>
+<lm-editor readonly="foobar"></lm-editor>
+
+<!-- editable -->
+<lm-editor></lm-editor>
+<lm-editor readonly="false"></lm-editor>
 ```
 
 ### Programmatic Access
