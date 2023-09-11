@@ -66,10 +66,9 @@ change readonly reactively:
 
 ```html
 <!-- readonly -->
-<lm-editor readOnly></lm-editor>
 <lm-editor readonly></lm-editor>
 <lm-editor readonly=""></lm-editor>
-<lm-editor readonly="foobar"></lm-editor>
+<lm-editor readonly="true"></lm-editor>
 
 <!-- editable -->
 <lm-editor></lm-editor>
