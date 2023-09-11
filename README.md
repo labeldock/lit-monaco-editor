@@ -1,6 +1,9 @@
 # lm-editor: Lit-based Monaco Editor
 
-The `lm-editor` package is an alpha-stage project that provides a Monaco Editor as a lit-based custom web element. While it is currently not feature-rich, it serves as a foundational block for more advanced Monaco Editor implementations.
+The lm-editor is a `lit based monaco editor`. Wait, what? Oopsie daisy... I mean, it's a `lit element component based on the monaco editor`. Ugh, it's like mixing up your coffee with your tea!
+
+## The Real Deal
+To set things straight, it's a monaco editor crafted using web component technology. Currently, it's being tailored to fit like a glove in native web environments using RubyOnRails and Alpinejs. While it might not be the flashiest kid on the block (aka "currently not feature-rich"), your interest, love, and especially those dollar bills will shape its future.
 
 ## Features
 
