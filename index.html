@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Lit</title>
     <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        box-sizing: border-box;
+      }
+      section {
+        padding: 20px;
+        min-height: calc(100vh - 280px);
+        margin-bottom: 60px;
+      }
       .sample-box {
         border:1px solid gray;
       }
@@ -13,21 +24,58 @@
     <script type="module" src="/src/entry.mjs"></script>
   </head>
   <body>
-    <div class="sample-box" style="width:400px; height:250px;">
-      <lm-editor value="Use value attribute" lang="html"></lm-editor>
-    </div>
-    <div>
-      <button onclick="toggleReadOnly(event)">Toggle readOnly</button>
-      <span>
-        ReadOnly : <samp id="read-only-status">?</samp>
-      </span>
-    </div>
-    <div class="sample-box" style="width:auto; height:250px;">
-      <lm-editor id="readonly-test-target" lang="html" src="./test1.html"></lm-editor>
-    </div>
-    <div class="sample-box" style="width:auto; height:250px;">
-      <lm-editor lang="json" src="./data.json"></lm-editor>
-    </div>
+    <section>
+      <h2 id="test1">TEST1</h2>
+      <!-- normal -->
+      <pre>
+        <code>
+&lt;div style="width:400px; height:250px;"&gt;
+  &lt;lm-editor value="Use value attribute" lang="html"&gt;&lt;/lm-editor&gt;
+&lt;/div&gt;
+        </code>
+      </pre>
+      <div class="sample-box" style="width:400px; height:250px;">
+        <lm-editor value="Use value attribute" id="readonly-test-target" lang="html"></lm-editor>
+      </div>
+      <br/>
+      <div>
+        <button onclick="toggleReadOnly(event)">Toggle readOnly</button>
+        <span>
+          ReadOnly : <span id="read-only-status">?</span>
+        </span>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="test2">TEST2</h2>
+      <pre>
+        <code>
+&lt;div style="width:400px; height:250px;"&gt;
+  &lt;lm-editor lang="html" src="./test1.html"&gt;&lt;/lm-editor&gt;
+&lt;/div&gt;
+        </code>
+      </pre>
+      <div class="sample-box" style="width:auto; height:250px;">
+        <lm-editor lang="html" src="./test1.html"></lm-editor>
+      </div>
+    </section>
+    
+    <section>
+      <h2 id="test3">TEST3</h2>
+      <div class="sample-box" style="width:auto; height:250px;">
+        <lm-editor lang="json" src="./data.json"></lm-editor>
+      </div>
+    </section>
+    <script>
+      document.body.addEventListener('click', function(event) {
+        var target = event.target;
+        // 클릭된 요소가 h2 태그이고 id 속성을 가지고 있는지 확인
+        if (target.tagName.toLowerCase() === 'h2' && target.id) {
+          // URL에 #{id} 추가하고 이동
+          window.location.hash = target.id;
+        }
+      });
+    </script>
     <script>
       function toggleReadOnly (event){
         const testTarget = document.getElementById("readonly-test-target")
