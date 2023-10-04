@@ -1,8 +1,5 @@
 # lm-editor: Lit-based Monaco Editor
 
-The lm-editor is a `lit component based monaco editor`. Wait, what? Oopsie daisy... I mean, it's a `monaco editor based lit component`. Ugh, it's like mixing up your coffee with your tea!
-
-## The Real Deal
 To set things straight, it's a monaco editor crafted using web component technology. Currently, it's being tailored to fit like a glove in native web environments using RubyOnRails and Alpinejs. While it might not be the flashiest kid on the block (aka "currently not feature-rich"), your interest, love, and especially those dollar bills will shape its future.
 
 ## Features
@@ -10,6 +7,9 @@ To set things straight, it's a monaco editor crafted using web component technol
 - Built on Monaco 0.41.0
 - Utilizes lit for creating a custom element
 - Supports Emmet for HTML language
+- Toggleable footer display with `disabled-footer` attribute
+- Customizable footer through a designated slot
+
 
 ## Build Instructions
 
@@ -77,6 +77,35 @@ change readonly reactively:
 <lm-editor></lm-editor>
 <lm-editor readonly="false"></lm-editor>
 ```
+
+## Disabled-Footer
+
+The `disabled-footer` attribute allows you to control the visibility of the editor's footer information. When included, the footer information will not be displayed.
+
+```html
+<lm-editor disabled-footer></lm-editor>
+```
+
+Any value assigned to `disabled-footer` will result in the footer information being hidden, with the exception of the value "false". When set to "false", the `disabled-footer` attribute is treated as if it wasn’t included.
+
+```html
+<lm-editor disabled-footer="false"></lm-editor>
+```
+
+## Footer Slot
+
+You can define a custom footer by utilizing the `footer` slot. This allows for user-defined content and actions in the footer area of the editor.
+
+```html
+<lm-editor>
+  <div slot="footer" style="width:160px;">
+      <div>Your custom action</div>
+      <button onclick="footerButtonClick()">Save</button>
+   </div>
+</lm-editor>
+```
+
+In the example above, a custom footer is created with a div element for displaying text and a button for executing a save action through an `onclick` event.
 
 ### Programmatic Access
 

@@ -26,6 +26,10 @@
   <body>
     <section>
       <h2 id="test1">TEST1</h2>
+      <ul>
+        <li>Resize</li>
+        <li>Dynamic readonly</li>
+      </ul>
       <!-- normal -->
       <pre>
         <code>
@@ -48,6 +52,10 @@
 
     <section>
       <h2 id="test2">TEST2</h2>
+      <ul>
+        <li>[lang] (html,javascript,css...)</li>
+        <li>[src] (CORS is an issue that publishers must solve)</li>
+      </ul>
       <pre>
         <code>
 &lt;div style="width:400px; height:250px;"&gt;
@@ -62,10 +70,65 @@
     
     <section>
       <h2 id="test3">TEST3</h2>
-      <div class="sample-box" style="width:auto; height:250px;">
-        <lm-editor lang="json" src="./data.json"></lm-editor>
+      <ul>
+        <li>[disabled-footer] => Hidden</li>
+        <li>[disabled-footer=false] => Visible</li>
+        <li>[disabled-footer=+.] => Hidden</li>
+      </ul>
+      <pre>
+        <code>
+&lt;lm-editor lang="json" src="./data.json" disabled-footer&gt;&lt;/lm-editor&gt;
+&lt;lm-editor lang="json" src="./data.json" disabled-footer="false"&gt;&lt;/lm-editor&gt;
+&lt;lm-editor lang="json" src="./data.json" disabled-footer="nonono"&gt;&lt;/lm-editor&gt;
+        </code>
+      </pre>
+      <div class="sample-box" style="width:auto; height:120px;">
+        <lm-editor lang="json" src="./data.json" disabled-footer></lm-editor>
+      </div>
+      <div class="sample-box" style="width:auto; height:120px;">
+        <lm-editor lang="json" src="./data.json" disabled-footer="false"></lm-editor>
+      </div>
+      <div class="sample-box" style="width:auto; height:120px;">
+        <lm-editor lang="json" src="./data.json" disabled-footer="nonono"></lm-editor>
       </div>
     </section>
+
+    <section>
+      <h2 id="test4">TEST4</h2>
+      <ul>
+        <li>Slot</li>
+      </ul>
+      <pre>
+        <code>
+&lt;div style="width:auto; height:250px;"&gt;
+  &lt;lm-editor lang="json" src="./data.json"&gt;
+    &lt;div slot="footer" style="width:160px;"&gt;
+      &lt;div&gt;Your custom action&lt;/div&gt;
+      &lt;button onclick="footerButtonClick()"&gt;Save&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/lm-editor&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  function footerButtonClick (){
+    alert("Save")
+  }
+&lt;/script&gt;
+        </code>
+      </pre>
+      <div class="sample-box" style="width:auto; height:250px;">
+        <lm-editor lang="json" src="./data.json">
+          <div slot="footer" style="width:160px;">
+            <div>Your custom action</div>
+            <button onclick="footerButtonClick()">Save</button>
+          </div>
+        </lm-editor>
+      </div>
+    </section>
+    <script>
+      function footerButtonClick (){
+        alert("Save")
+      }
+    </script>
     <script>
       document.body.addEventListener('click', function(event) {
         var target = event.target;

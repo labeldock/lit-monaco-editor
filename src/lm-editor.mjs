@@ -7,6 +7,7 @@ import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
+// Why is tsWorker annotated? : This editor is aimed at generating runtime code to use immediately rather than declaring precompiled languages, so tsWorker has been excluded. Including tsWorker is not trivial due to the file size.
 // import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 
 import { emmetHTML } from 'emmet-monaco-es'
@@ -31,27 +32,6 @@ window.MonacoEnvironment = {
 };
 
 export class LitMonacoEditor extends LitElement {
-  containerRef = createRef()
-  editor = null
-  
-  static get properties() {
-    return {
-      theme: { type: String },
-      lang: { type: String },
-      src: { type: String },
-      value: { type: String },
-      readonly: { type: String },
-    }
-  }
-
-  constructor() {
-    super()
-    this.theme = null
-    this.lang = null
-    this.src = null
-    this.value = null
-    this.readonly = null
-  }
 
   static get styles() {
     return css`
@@ -79,25 +59,27 @@ export class LitMonacoEditor extends LitElement {
         border:1px solid var(--lit-editor-faint-line);
         border-radius: 8px;
         font-size:14px;
+        color: var(--lit-editor-light-line);
       }
       .lm-editor-footer-dropdown {
         display: none;
         position: absolute;
         left: auto;
-        right: 0px;
-        bottom: -2px;
+        right: -1px;
+        bottom: -1px;
         padding: 2px 4px;
-        transform: translate(0, -100%);
-        width: 120px;
         border:1px solid var(--lit-editor-faint-line);
         background-color: rgba(0,0,0,.5);
         border-radius: 4px;
       }
+      .lm-editor-footer-dropdown-content {
+        width: 120px;
+      }
       .lm-editor-footer-dropdown > div {
         display: block;
-        
       }
       .lm-editor-footer-toggle {
+        position: absolute;
         color: var(--lit-editor-faint-line);
         text-align: center;
         width: var(--lit-editor-footer-height);
@@ -105,7 +87,6 @@ export class LitMonacoEditor extends LitElement {
         padding-top: 4px;
       }
       .lm-editor-footer:hover {
-        border-color: var(--lit-editor-light-line);
       }
       .lm-editor-footer:hover .lm-editor-footer-toggle {
         color: var(--lit-editor-light-line);
@@ -115,8 +96,32 @@ export class LitMonacoEditor extends LitElement {
       }
     `
   }
+  containerRef = createRef()
+  editor = null
+
+  static get properties() {
+    return {
+      theme: { type: String },
+      lang: { type: String },
+      src: { type: String },
+      value: { type: String },
+      disabledFooter: { type: String, attribute: 'disabled-footer' },
+      readonly: { type: String },
+    }
+  }
+
+  constructor() {
+    super()
+    this.theme = null
+    this.lang = null
+    this.src = null
+    this.value = null
+    this.readonly = null
+    this.disabledFooter = null
+  }
 
   connectedCallback() {
+    // keydown event listener for save and explorer
     this.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
@@ -129,7 +134,6 @@ export class LitMonacoEditor extends LitElement {
         const saveEvent = new Event('explorer');
         this.dispatchEvent(saveEvent);
       }
-      
     });
     super.connectedCallback()
   }
@@ -228,20 +232,28 @@ export class LitMonacoEditor extends LitElement {
   }
   
   render() {
-    return html`
-      <style>${styles}</style>
-      <div class="lm-editor-main" ${ref(this.containerRef)}></div>
+    console.log('this.disabledFooter', this.disabledFooter)
+    const footerContent = this.disabledFooter !== null && this.disabledFooter !== "false" ? '' : html`
       <footer class="lm-editor-footer">
+        <div class="lm-editor-footer-dropdown">
+          <slot name="footer">
+            <div class="lm-editor-footer-dropdown-content">
+              <div>lang : ${this.computedLanguage}</div>
+            </div>
+          </slot>
+        </div>
         <div class="lm-editor-footer-toggle">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-code-square" viewBox="0 0 16 16">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
             <path d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z"/>
           </svg>
         </div>
-        <div class="lm-editor-footer-dropdown">
-          <div>lang : ${this.computedLanguage}</div>
-        </div>
       </footer>
+    `
+    return html`
+      <style>${styles}</style>
+      <div class="lm-editor-main" ${ref(this.containerRef)}></div>
+      ${footerContent}
     `
   }
 }
